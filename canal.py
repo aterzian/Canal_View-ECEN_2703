@@ -181,6 +181,10 @@ def add_constraints(grid: Sequence[Sequence[int]],
             slv.add(Implies(R[i][j], And(absentH, absentV)))
 
             # Legality defined first to help solver
+            ### Legality is not necessary due to pseudo boolean equation from 195. ###
+            ### But it is interesting that without predefined legality (which      ###
+            ### only constrains to being at most one link in either direction)     ###
+            ### the CPU takes 3 seconds longer to run all the puzzles.             ###
             legalH = Or(Not(H[i][j][0]), Not(H[i][j][1]))
             legalV = Or(Not(V[i][j][0]), Not(V[i][j][1]))
             legal = And(legalH, legalV)
