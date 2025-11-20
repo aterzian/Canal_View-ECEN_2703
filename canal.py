@@ -75,14 +75,14 @@ def solve_and_print(grid: Sequence[Sequence[int]],
     while slv.check() == sat:
         mdl = slv.model()
         Cbool, Estr, Pbool, _ = evaluate_model(mdl, C, H, V, P, R)
-        verify(grid, Cbool, allow_weak=True)
+        verify(grid, Cbool, allow_weak=False)
 
         # Safe checks for matplotlib and fontsize
         use_matplotlib = getattr(args, "matplotlib", False)
         fontsize = getattr(args, "fontsize", 12)
 
         if use_matplotlib:
-            print_matplotlib(grid, Cbool, Estr, Pbool, fontsize=fontsize)
+            print_matplotlib(grid, Cbool, Estr, Pbool, fontsize=fontsize, parity = args.annotate)
         else:
             print_unicode(grid, Cbool)
 
@@ -138,9 +138,9 @@ def add_constraints(grid: Sequence[Sequence[int]],
         for j in range(ncol):
 
             # If cell has a clue, it cannot be shaded.
-            if grid[i][j] is not None:
+            if grid[i][j] != -2:
                 slv.add(And(C[i][j], True))
-                if grid[i][j] != '?':
+                if grid[i][j] != -1:
                     # Number of shaded cells visible from clue cell is equal to clue.
                     clue = IntVal(grid[i][j])
                     numLeft = IntVal(0)
