@@ -40,8 +40,7 @@ def print_matplotlib(grid: Sequence[Sequence[int]],
                      C: Optional[Sequence[Sequence[bool]]] = None,
                      E: Optional[Sequence[Sequence[str]]] = None,
                      P: Optional[Sequence[Sequence[bool]]] = None,
-                     fontsize: int = 24,
-                     parity: Optional[bool] = None) -> None:
+                     fontsize: int = 24) -> None:
     """Create matplotlib plot of the grid."""
     nrow = len(grid)
     ncol = len(grid[0])
@@ -83,32 +82,31 @@ def print_matplotlib(grid: Sequence[Sequence[int]],
         ax.add_patch(patch)
 
     # Draw spanning tree.
-    if parity:
-        if C is not None and E is not None and P is not None:
-            for i in range(nrow):
-                for j in range(ncol):
-                    if not C[i][j]:
-                        arrowcolor = 'purple' if P[i][j] else 'teal'
-                        if E[i][j] == '^':
-                            hi, hj = 0.6, 0.0
-                            ax.arrow(j+0.5, nrow-i-0.3, hj, hi, width=0.08,
-                                    length_includes_head=True, head_width=0.16,
-                                    color=arrowcolor)
-                        elif E[i][j] == 'v':
-                            hi, hj = -0.6, 0.0
-                            ax.arrow(j+0.5, nrow-i-0.7, hj, hi, width=0.08,
-                                    length_includes_head=True, head_width=0.16,
-                                    color=arrowcolor)
-                        elif E[i][j] == '>':
-                            hi, hj = 0.0, 0.6
-                            ax.arrow(j+0.7, nrow-i-0.5, hj, hi, width=0.08,
-                                    length_includes_head=True, head_width=0.16,
-                                    color=arrowcolor)
-                        elif E[i][j] == '<':
-                            hi, hj = 0.0, -0.6
-                            ax.arrow(j+0.3, nrow-i-0.5, hj, hi, width=0.08,
-                                    length_includes_head=True, head_width=0.16,
-                                    color=arrowcolor)
+    if C is not None and E is not None and P is not None:
+        for i in range(nrow):
+            for j in range(ncol):
+                if not C[i][j]:
+                    arrowcolor = 'purple' if P[i][j] else 'teal'
+                    if E[i][j] == '^':
+                        hi, hj = 0.6, 0.0
+                        ax.arrow(j+0.5, nrow-i-0.3, hj, hi, width=0.08,
+                                length_includes_head=True, head_width=0.16,
+                                color=arrowcolor)
+                    elif E[i][j] == 'v':
+                        hi, hj = -0.6, 0.0
+                        ax.arrow(j+0.5, nrow-i-0.7, hj, hi, width=0.08,
+                                length_includes_head=True, head_width=0.16,
+                                color=arrowcolor)
+                    elif E[i][j] == '>':
+                        hi, hj = 0.0, 0.6
+                        ax.arrow(j+0.7, nrow-i-0.5, hj, hi, width=0.08,
+                                length_includes_head=True, head_width=0.16,
+                                color=arrowcolor)
+                    elif E[i][j] == '<':
+                        hi, hj = 0.0, -0.6
+                        ax.arrow(j+0.3, nrow-i-0.5, hj, hi, width=0.08,
+                                length_includes_head=True, head_width=0.16,
+                                color=arrowcolor)
 
     ax.set_xlim(-0.1,ncol+0.1)
     ax.set_ylim(-0.1,nrow+0.1)

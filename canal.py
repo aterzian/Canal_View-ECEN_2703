@@ -82,9 +82,15 @@ def solve_and_print(grid: Sequence[Sequence[int]],
         fontsize = getattr(args, "fontsize", 12)
 
         if use_matplotlib:
-            print_matplotlib(grid, Cbool, Estr, Pbool, fontsize=fontsize, parity = args.annotate)
+            if args.annotate:
+                print_matplotlib(grid, Cbool, Estr, Pbool, fontsize=fontsize)
+            else:
+                print_matplotlib(grid, Cbool, fontsize=fontsize)
         else:
             print_unicode(grid, Cbool)
+        
+        if args.report:
+            print(slv.statistics())
 
         num_solutions += 1
         print(f"# Found solution {num_solutions}")
